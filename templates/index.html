@@ -7,15 +7,11 @@
 </head>
 <body>
   <h1>WordBomb - Test</h1>
+  <!-- TODO: cacher wordInput pour que username_input soit le premier à s'afficher lors de la connexion-->
+  <input id="wordInput" type="text">
+  <input id="username_input" type="text">
+  <p id="input_zone"></p>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
-  <script>
-  
-    const socket = io()
-
-    socket.on('connect', () =>{
-      console.log("Un joueur s'est connecté !")
-    })
-    
-  </script>
+  <script src="../static/script.js"></script>
 </body>
 </html>

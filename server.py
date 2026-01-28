@@ -1,8 +1,16 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
 socketio = SocketIO(app)
+
+users = {}
+
+@socketio.on('set_username')
+def username_handler(data):
+  username = data.get('username', 'Anonyme')
+  users[request.sid] = username
+  print(f"{username} ({request.sid}) s'est identifié")
 
 
 # Route HTTP classique
@@ -17,8 +25,7 @@ def handle_connect():
 
 @socketio.on('submit_word')
 def onWord_submit(e):
-  print(e)
-  emit('word_result', e, broadcast=True)
+  emit('word_result', f'{users[request.sid]} a écrit: {e.get('word')}', broadcast=True)
 
 if __name__ == '__main__':
   socketio.run(app, debug=True)
